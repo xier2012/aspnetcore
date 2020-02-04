@@ -107,6 +107,10 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http3
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}{ex.StackTrace}");
+            }
             finally
             {
                 await settingsStream;
