@@ -45,10 +45,15 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Transport.Quic.Internal
         public async ValueTask<ConnectionContext> AcceptAsync(CancellationToken cancellationToken = default)
         {
             var quicConnection = await _listener.AcceptConnectionAsync(cancellationToken);
-            if (quicConnection.LocalEndPoint == null)
+            try
             {
-                // Work around for QuicConnection never being null; the internal provider is null.
-                // This will be removed once the providers are removed
+                // Because the stream is wrapped with a quic connection provider,
+                // we need to check a property to check if this is null
+                // Will be removed once the provider abstraction is removed.
+                _ = quicConnection.LocalEndPoint;
+            }
+            catch (Exception)
+            {
                 return null;
             }
 

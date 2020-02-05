@@ -52,7 +52,6 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http3
             Reset();
 
             _http3Output = new Http3OutputProducer(
-                0, // TODO streamid
                 _frameWriter,
                 context.MemoryPool,
                 this,
@@ -76,6 +75,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http3
 
         public void Abort(ConnectionAbortedException ex, Http3ErrorCode errorCode)
         {
+            // TODO something with request aborted?
         }
 
         public void OnHeadersComplete(bool endStream)

@@ -36,13 +36,11 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http3
         private IMemoryOwner<byte> _fakeMemoryOwner;
 
         public Http3OutputProducer(
-             int streamId,
              Http3FrameWriter frameWriter,
              MemoryPool<byte> pool,
              Http3Stream stream,
              IKestrelTrace log)
         {
-            _streamId = streamId;
             _frameWriter = frameWriter;
             _memoryPool = pool;
             _stream = stream;
@@ -309,7 +307,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http3
                     // TODO figure out something to do here.
                 }
 
-                _frameWriter.WriteResponseHeaders(_streamId, statusCode, responseHeaders);
+                _frameWriter.WriteResponseHeaders(statusCode, responseHeaders);
             }
         }
 
@@ -351,7 +349,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http3
                         }
 
                         _stream.ResponseTrailers.SetReadOnly();
-                        flushResult = await _frameWriter.WriteResponseTrailers(_streamId, _stream.ResponseTrailers);
+                        flushResult = await _frameWriter.WriteResponseTrailers(_stream.ResponseTrailers);
                     }
                     else if (readResult.IsCompleted)
                     {
