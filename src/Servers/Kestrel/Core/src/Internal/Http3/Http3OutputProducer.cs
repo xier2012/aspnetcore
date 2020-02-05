@@ -19,7 +19,6 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http3
 {
     internal class Http3OutputProducer : IHttpOutputProducer, IHttpOutputAborter
     {
-        private readonly int _streamId;
         private readonly Http3FrameWriter _frameWriter;
         private readonly TimingPipeFlusher _flusher;
         private readonly IKestrelTrace _log;
@@ -48,7 +47,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http3
 
             var pipe = CreateDataPipe(pool);
 
-            _pipeWriter = pipe.Writer;
+            _pipeWriter = pipe.Writer; 
             _pipeReader = pipe.Reader;
 
             _flusher = new TimingPipeFlusher(_pipeWriter, timeoutControl: null, log);

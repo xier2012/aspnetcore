@@ -16,11 +16,12 @@ namespace Http3SampleApp
         public static void Main(string[] args)
         {
             // TODO resolve x509 cert in config
-            var certName = "localhost";
+            var certName = "netcorehttp3.westus2.cloudapp.azure.com";
             if (args.Length > 0)
             {
                 certName = args[0];
             }
+
             var cert = CertificateLoader.LoadFromStoreCert(certName, StoreName.My.ToString(), StoreLocation.LocalMachine, true);
             var hostBuilder = new HostBuilder()
                  .ConfigureLogging((_, factory) =>
@@ -42,11 +43,21 @@ namespace Http3SampleApp
                      .ConfigureKestrel((context, options) =>
                      {
                          var basePort = 443;
-
+                         options.EnableAltSvc = true;
                          options.Listen(IPAddress.Any, basePort, listenOptions =>
                          {
-                             listenOptions.UseHttps();
-                             listenOptions.Protocols = HttpProtocols.Http3;
+                             listenOptions.UseHttps(httpsOptions =>
+                             {
+                                 httpsOptions.ServerCertificate = cert;
+                             });
+                         });
+                         options.Listen(IPAddress.Any, basePort, listenOptions =>
+                         {
+                            listenOptions.UseHttps(httpsOptions =>
+                             {
+                                 httpsOptions.ServerCertificate = cert;
+                             });
+                            listenOptions.Protocols = HttpProtocols.Http3;
                          });
                      })
                      .UseStartup<Startup>();
