@@ -2264,6 +2264,7 @@ class HubConnectionTest {
         for (int i = 1; i < sentMessages.length; i++) {
             assertEquals("{\"type\":6}" + RECORD_SEPARATOR, sentMessages[i]);
         }
+        assertFalse(true);
     }
 
     @Test
