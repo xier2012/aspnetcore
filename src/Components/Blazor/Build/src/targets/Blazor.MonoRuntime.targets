@@ -129,19 +129,6 @@
       Condition="'$(BlazorLinkOnBuild)' != 'true' AND '$(BlazorLinkOnBuild)' != 'false'" />
 
     <ItemGroup>
-      <!--
-        ReferenceCopyLocalPaths includes all files that are part of the build out with CopyLocalLockFileAssemblies on.
-        Remove assemblies that are inputs to calculating the assembly closure. Instead use the resolved outputs, since it is the minimal set.
-       -->
-      <_BlazorCopyLocalPaths Include="@(ReferenceCopyLocalPaths)" />
-      <_BlazorCopyLocalPaths Remove="@(_BlazorManagedRuntimeAssemby)" />
-
-      <BlazorOutputWithTargetPath Include="@(_BlazorCopyLocalPaths)">
-        <BlazorRuntimeFile>true</BlazorRuntimeFile>
-        <TargetOutputPath>$(BlazorRuntimeBinOutputPath)%(_BlazorCopyLocalPaths.DestinationSubDirectory)%(FileName)%(Extension)</TargetOutputPath>
-        <RelativeOutputPath>%(_BlazorCopyLocalPaths.DestinationSubDirectory)%(FileName)%(Extension)</RelativeOutputPath>
-      </BlazorOutputWithTargetPath>
-
       <BlazorOutputWithTargetPath Include="@(_BlazorResolvedAssembly)">
         <BlazorRuntimeFile>true</BlazorRuntimeFile>
         <TargetOutputPath>$(BlazorRuntimeBinOutputPath)%(FileName)%(Extension)</TargetOutputPath>
