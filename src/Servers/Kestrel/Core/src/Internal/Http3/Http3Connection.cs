@@ -158,7 +158,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http3
             var connectionContext = await Context.ConnectionFeatures.Get<IQuicCreateStreamFeature>().StartUnidirectionalStreamAsync();
             var httpConnectionContext = new HttpConnectionContext
             {
-                ConnectionId = connectionContext.ConnectionId,
+                ConnectionId = "123", // TODO create connection ID here.
                 ConnectionContext = connectionContext,
                 Protocols = Context.Protocols,
                 ServiceContext = Context.ServiceContext,

@@ -412,6 +412,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http3
             // request message that contains more than one Host header field or a
             // Host header field with an invalid field-value.
             hostText = host.ToString();
+            // localhost:no-cache
             if (host.Count > 1 || !HttpUtilities.IsHostHeaderValid(hostText))
             {
                 // RST replaces 400

@@ -17,6 +17,7 @@ namespace Http3SampleApp
         {
             // TODO resolve x509 cert in config
             var certName = "netcorehttp3.westus2.cloudapp.azure.com";
+            //var certName = "localhost";
             if (args.Length > 0)
             {
                 certName = args[0];
