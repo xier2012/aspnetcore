@@ -1,0 +1,35 @@
+{
+  "name": "microsoft.aspnetcore.components.webassembly.authentication",
+  "version": "0.1.0",
+  "description": "Interop layer for Microsoft.AspNetCore.Components.WebAssembly.Authentication",
+  "scripts": {
+    "build": "npm run build:release",
+    "build:release": "webpack --mode production --env.production",
+    "build:debug": "webpack --mode development",
+    "watch": "webpack --watch --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dotnet/aspnetcore.git"
+  },
+  "keywords": [
+    "aspnetcore",
+    "blazor",
+    "oidc"
+  ],
+  "author": "Microsoft corporation",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dotnet/aspnetcore/issues"
+  },
+  "homepage": "https://github.com/dotnet/aspnetcore#readme",
+  "devDependencies": {
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "oidc-client": "^1.10.1"
+  }
+}

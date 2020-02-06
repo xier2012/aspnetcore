@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <Sdk Name="Yarn.MSBuild" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Description>Build client-side authentication for single-page applications (SPAs).</Description>
+    <IsShippingPackage>true</IsShippingPackage>
+    <HasReferenceAssembly>false</HasReferenceAssembly>
+    <RazorLangVersion>3.0</RazorLangVersion>
+    <YarnWorkingDir>$(MSBuildThisFileDirectory)Interop\</YarnWorkingDir>
+    <ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
+      CompileInterop;
+      $(ResolveCurrentProjectStaticWebAssetsInputsDependsOn)
+    </ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="$(YarnWorkingDir)*" />
+    <Content Remove="wwwroot\.gitignore" />
+    <YarnInputs Include="$(YarnWorkingDir)**" Exclude="$(YarnWorkingDir)node_modules\**;$(YarnWorkingDir)*.d.ts" />
+    <YarnOutputs Include="wwwroot\AuthenticationService.js" />
+    <YarnOutputs Include="wwwroot\AuthenticationService.js.map" />
+    <None Include="C:\work\AspNetCore2\src\Components\Blazor\WebAssembly.Authentication\src\Interop\AuthenticationService.ts" />
+    <None Include="C:\work\AspNetCore2\src\Components\Blazor\WebAssembly.Authentication\src\Interop\package.json" />
+    <None Include="C:\work\AspNetCore2\src\Components\Blazor\WebAssembly.Authentication\src\Interop\tsconfig.json" />
+    <None Include="C:\work\AspNetCore2\src\Components\Blazor\WebAssembly.Authentication\src\Interop\webpack.config.js" />
+    <None Include="C:\work\AspNetCore2\src\Components\Blazor\WebAssembly.Authentication\src\Interop\yarn.lock" />
+    <None Include="wwwroot\.gitignore" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="Mono.WebAssembly.Interop" />
+    <Reference Include="Microsoft.AspNetCore.Blazor" />
+    <Reference Include="Microsoft.AspNetCore.Components.Web" />
+    <Reference Include="Microsoft.AspNetCore.Components.Authorization" />
+    <Reference Include="Microsoft.Extensions.Configuration" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication.Tests" />
+  </ItemGroup>
+
+  <Target Name="CompileInterop" Condition="'$(DesignTimeBuild)' != 'true'" Inputs="@(YarnInputs)" Outputs="@(YarnOutputs)">
+    <Yarn Command="install --mutex network" WorkingDirectory="$(YarnWorkingDir)" />
+    <Yarn Command="run build:release" WorkingDirectory="$(YarnWorkingDir)" Condition="'$(Configuration)' == 'Release'" />
+    <Yarn Command="run build:debug" WorkingDirectory="$(YarnWorkingDir)" Condition="'$(Configuration)' == 'Debug'" />
+    <ItemGroup>
+      <Content Include="$(YarnOutputPattern)" />      
+    </ItemGroup>
+  </Target>
+
+</Project>
