@@ -610,7 +610,7 @@ namespace Microsoft.AspNetCore.Components.WebAssembly.Authentication
 
             public int Attach(IComponent component) => AssignRootComponentId(component);
 
-            private static readonly Dispatcher _dispatcher = new RendererSynchronizationContextDispatcher();
+            private static readonly Dispatcher _dispatcher = Dispatcher.CreateDefault();
 
             public override Dispatcher Dispatcher => _dispatcher;
 

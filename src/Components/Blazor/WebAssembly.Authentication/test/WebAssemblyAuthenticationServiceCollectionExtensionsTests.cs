@@ -31,16 +31,16 @@ namespace Microsoft.AspNetCore.Components.WebAssembly.Authentication
             host.Services.GetRequiredService<IRemoteAuthenticationService<RemoteAuthenticationState>>();
         }
 
-        [Fact]
-        public void CanCreate_DefaultAuthenticationManager()
-        {
-            var builder = WebAssemblyHostBuilder.CreateDefault();
-            builder.Services.AddApiAuthorization();
-            var host = builder.Build();
+        //[Fact]
+        //public void CanCreate_DefaultAuthenticationManager()
+        //{
+        //    var builder = WebAssemblyHostBuilder.CreateDefault();
+        //    builder.Services.AddApiAuthorization();
+        //    var host = builder.Build();
 
-            var componentFactory = new ComponentFactory();
-            componentFactory.InstantiateComponent(host.Services, typeof(AuthenticationManager<RemoteAuthenticationState>));
-        }
+        //    var componentFactory = new ComponentFactory();
+        //    componentFactory.InstantiateComponent(host.Services, typeof(AuthenticationManager<RemoteAuthenticationState>));
+        //}
 
         [Fact]
         public void ApiAuthorizationOptions_ConfigurationDefaultsGetApplied()

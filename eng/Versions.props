@@ -279,6 +279,9 @@
     <MicrosoftAspNetCoreComponentsFormsPackageVersion>$(MicrosoftAspNetCoreComponentsPackageVersion)</MicrosoftAspNetCoreComponentsFormsPackageVersion>
     <MicrosoftAspNetCoreComponentsWebPackageVersion>$(MicrosoftAspNetCoreComponentsPackageVersion)</MicrosoftAspNetCoreComponentsWebPackageVersion>
     <MicrosoftAspNetCoreMvcPackageVersion>$(MicrosoftAspNetCoreComponentsPackageVersion)</MicrosoftAspNetCoreMvcPackageVersion>
+    <MicrosoftAspNetCoreApiAuthorizationIdentityServerPackageVersion>$(MicrosoftAspNetCoreApiAuthorizationIdentityServerPackageVersion)</MicrosoftAspNetCoreApiAuthorizationIdentityServerPackageVersion>
+    <MicrosoftAspNetCoreIdentityEntityFrameworkCorePackageVersion>$(MicrosoftAspNetCoreIdentityEntityFrameworkCorePackageVersion)</MicrosoftAspNetCoreIdentityEntityFrameworkCorePackageVersion>
+    <MicrosoftAspNetCoreIdentityUIPackageVersion>$(MicrosoftAspNetCoreIdentityUIPackageVersion)</MicrosoftAspNetCoreIdentityUIPackageVersion>
   </PropertyGroup>
   <!-- Restore feeds -->
   <PropertyGroup Label="Restore feeds">
