@@ -47,10 +47,10 @@ namespace Microsoft.AspNetCore.Components.E2ETest.Tests
             _serverFixture.Environment = AspNetEnvironment.Development;
             _serverFixture.ApplicationAssembly = typeof(Program).Assembly;
 
-            string _staticWebAssetsFile = ResolveStaticWebAssetsManifest();
+            //string _staticWebAssetsFile = ResolveStaticWebAssetsManifest();
 
             _serverFixture.AdditionalArguments.Clear();
-            _serverFixture.AdditionalArguments.AddRange(new[] { "--staticwebassets", _staticWebAssetsFile });
+            //_serverFixture.AdditionalArguments.AddRange(new[] { "--staticwebassets", _staticWebAssetsFile });
 
             _serverFixture.BuildWebHostMethod = args => Program.CreateHostBuilder(args)
                 .ConfigureServices(services => SetupTestDatabase<ApplicationDbContext>(services, _connection))
