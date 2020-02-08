@@ -44,17 +44,12 @@ namespace Microsoft.AspNetCore.Components.E2ETest.Tests
             ITestOutputHelper output) :
             base(browserFixture, serverFixture, output)
         {
-            _serverFixture.Environment = AspNetEnvironment.Development;
             _serverFixture.ApplicationAssembly = typeof(Program).Assembly;
 
-            //string _staticWebAssetsFile = ResolveStaticWebAssetsManifest();
-
             _serverFixture.AdditionalArguments.Clear();
-            //_serverFixture.AdditionalArguments.AddRange(new[] { "--staticwebassets", _staticWebAssetsFile });
 
             _serverFixture.BuildWebHostMethod = args => Program.CreateHostBuilder(args)
                 .ConfigureServices(services => SetupTestDatabase<ApplicationDbContext>(services, _connection))
-                .ConfigureWebHost(hb => hb.UseSetting(WebHostDefaults.ApplicationKey, _serverFixture.ApplicationAssembly.GetName().Name))
                 .Build();
         }
 
@@ -407,17 +402,6 @@ namespace Microsoft.AspNetCore.Components.E2ETest.Tests
             {
                 applicationDbContext?.Database?.Migrate();
             }
-        }
-
-        private string ResolveStaticWebAssetsManifest()
-        {
-            var staticWebAssetsFileName = $"{typeof(Program).Assembly.GetName().Name}.StaticWebAssets.xml";
-            var _staticWebAssetsFile = Directory.GetFiles(
-                Path.Combine(ServerFixture.FindSampleOrTestSitePath(_serverFixture.ApplicationAssembly.FullName), "bin"),
-                staticWebAssetsFileName,
-                new EnumerationOptions { RecurseSubdirectories = true })
-                .SingleOrDefault();
-            return _staticWebAssetsFile;
         }
 
         public void Dispose()
