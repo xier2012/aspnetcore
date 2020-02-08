@@ -21,11 +21,6 @@ namespace Microsoft.AspNetCore.E2ETesting
         private static readonly AsyncLocal<ILogs> _logs = new AsyncLocal<ILogs>();
         private static readonly AsyncLocal<ITestOutputHelper> _output = new AsyncLocal<ITestOutputHelper>();
 
-        // Limit the number of concurrent browser tests.
-        private readonly static int MaxConcurrentBrowsers = Environment.ProcessorCount * 2;
-        private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(MaxConcurrentBrowsers);
-        private bool _semaphoreHeld;
-
         public BrowserTestBase(BrowserFixture browserFixture, ITestOutputHelper output)
         {
             BrowserFixture = browserFixture;
@@ -44,11 +39,6 @@ namespace Microsoft.AspNetCore.E2ETesting
 
         public Task DisposeAsync()
         {
-            if (_semaphoreHeld)
-            {
-                _semaphore.Release();
-            }
-
             return Task.CompletedTask;
         }
 
@@ -70,9 +60,6 @@ namespace Microsoft.AspNetCore.E2ETesting
 
         protected async Task InitializeBrowser(string isolationContext)
         {
-            await _semaphore.WaitAsync(TimeSpan.FromMinutes(30));
-            _semaphoreHeld = true;
-
             var (browser, logs) = await BrowserFixture.GetOrCreateBrowserAsync(Output, isolationContext);
             _asyncBrowser.Value = browser;
             _logs.Value = logs;
