@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.E2ETest.Infrastructure;
 using Microsoft.AspNetCore.Components.E2ETest.Infrastructure.ServerFixtures;
 using Microsoft.AspNetCore.E2ETesting;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -53,9 +53,25 @@ namespace Microsoft.AspNetCore.Components.E2ETest.Tests
                 .Build();
         }
 
+        public override async Task InitializeAsync()
+        {
+            var uri = _serverFixture.RootUri;
+            using (var client = new HttpClient()
+            {
+                BaseAddress = uri
+            })
+            {
+                var response = await client.GetAsync("_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js");
+                response.EnsureSuccessStatusCode();
+            }
+
+            await base.InitializeAsync();
+        }
+
         protected override void InitializeAsyncCore()
         {
             Browser.Navigate().GoToUrl("data:");
+
             Navigate("/", noReload: true);
             EnsureDatabaseCreated(_serverFixture.Host.Services);
             Browser.ExecuteJavaScript("sessionStorage.clear()");

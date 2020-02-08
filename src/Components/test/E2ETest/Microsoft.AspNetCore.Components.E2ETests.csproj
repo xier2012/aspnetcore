@@ -43,7 +43,6 @@
     <ProjectReference Include="..\..\Blazor\DevServer\src\Microsoft.AspNetCore.Blazor.DevServer.csproj" />
     <ProjectReference Include="..\testassets\BasicTestApp\BasicTestApp.csproj" />
     <ProjectReference Include="..\testassets\TestServer\Components.TestServer.csproj" />
-    <ProjectReference Include="..\..\Blazor\testassets\Wasm.Authentication.Client\Wasm.Authentication.Client.csproj" />
     <ProjectReference Include="..\..\Blazor\testassets\Wasm.Authentication.Server\Wasm.Authentication.Server.csproj" />
   </ItemGroup>
 
